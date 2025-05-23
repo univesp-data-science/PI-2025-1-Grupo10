@@ -22,6 +22,14 @@ class AuthenticatedSessionController extends Controller
     }
 
     /**
+     * Display the reset view.
+     */
+    public function reset(): Response
+    {
+        return Inertia::render('Auth/Reset');
+    }
+
+    /**
      * Handle an incoming authentication request.
      */
     public function store(LoginRequest $request): RedirectResponse

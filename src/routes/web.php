@@ -26,6 +26,10 @@ Route::get('login', [AuthenticatedSessionController::class, 'create'])
     ->name('login')
     ->middleware('guest');
 
+Route::get('login/reset', [AuthenticatedSessionController::class, 'reset'])
+    ->name('login.reset')
+    ->middleware('guest');
+
 Route::post('login', [AuthenticatedSessionController::class, 'store'])
     ->name('login.store')
     ->middleware('guest');
