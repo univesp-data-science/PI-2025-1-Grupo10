@@ -9,6 +9,8 @@ use App\Http\Controllers\ReportsController;
 use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Route;
 
+use App\Models\WiFiMaxx\UserAccess;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -19,6 +21,17 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::get('testDB', function () {
+
+    $result = UserAccess::getResumoPorHora(
+        '2025-01-01 00:00:00',
+        '2025-01-01 23:59:59'
+    );
+
+    return response()->json($result);
+
+});
 
 // Auth
 
@@ -40,6 +53,10 @@ Route::delete('logout', [AuthenticatedSessionController::class, 'destroy'])
 // Dashboard
 
 Route::get('/', [DashboardController::class, 'index'])
+    ->name('dashboard')
+    ->middleware('auth');
+
+Route::get('/dashboard', [DashboardController::class, 'index'])
     ->name('dashboard')
     ->middleware('auth');
 
@@ -137,6 +154,15 @@ Route::put('contacts/{contact}/restore', [ContactsController::class, 'restore'])
 
 Route::get('reports', [ReportsController::class, 'index'])
     ->name('reports')
+    ->middleware('auth');
+
+
+Route::get('reports/byDay', [ReportsController::class, 'byDay'])
+    ->name('reports.byday')
+    ->middleware('auth');
+
+Route::get('reports/tempEvolution', [ReportsController::class, 'tempEvolution'])
+    ->name('reports.tempEvolution')
     ->middleware('auth');
 
 // Images
